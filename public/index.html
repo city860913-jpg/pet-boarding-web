@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>淘狗寵物 PREMIUM | 會員註冊與合約簽署</title>
+  <!-- 引入 Tailwind CSS 與 Google 字體提升質感 -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Noto Sans TC', sans-serif; }
+    #signature-pad { border: 2px dashed #cbd5e1; background-color: #f8fafc; cursor: crosshair; }
+    /* 仿價目表精緻陰影與過渡效果 */
+    .premium-card { background: #ffffff; border: 1px solid #e2e8f0; border-top: 5px solid #1e3d59; }
+    /* 紅色星號樣式 */
+    .required-star { color: #ef4444; margin-left: 2px; font-weight: bold; }
+    /* 滾動條美化 */
+    .contract-box::-webkit-scrollbar { width: 6px; }
+    .contract-box::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 4px; }
+    .contract-box::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+    .contract-box::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen pb-12">
+
+  <!-- 錨點：切換頁面時自動回到此處 -->
+  <div id="top-anchor"></div>
+
+  <div class="max-w-xl mx-auto px-4 mt-8">
+
+    <!-- ==================== 頂部標題與進度列 ==================== -->
+    <div id="header-area" class="text-center mb-8">
+      <h1 class="text-2xl font-bold tracking-wide" style="color: #1e3d59;">🐾 淘狗寵物 PREMIUM</h1>
+      <p class="text-xs text-slate-400 mt-1 uppercase tracking-widest">Client Registration & Agreement</p>
+
+      <!-- 精緻進度條 -->
+      <div class="flex items-center justify-center space-x-3 mt-4">
+        <span id="badge-step1" class="text-xs px-3 py-1 font-medium rounded-full bg-[#1e3d59] text-white transition-all duration-300">Step 1 填寫基本資料</span>
+        <span class="text-slate-300 font-light">/</span>
+        <span id="badge-step2" class="text-xs px-3 py-1 font-medium rounded-full bg-slate-200 text-slate-500 transition-all duration-300">Step 2 閱讀與簽署合約</span>
+      </div>
+    </div>
+
+    <!-- ==================== 主表單 ==================== -->
+    <form id="regForm" class="premium-card rounded-2xl shadow-xl p-6 space-y-8" onsubmit="handleRegSubmit(event)" novalidate>
+
+      <!-- ==================== 第一頁：基本資料 ==================== -->
+      <div id="step1-container" class="space-y-8">
+
+        <!-- 1. 毛孩基本資料 -->
+        <div class="space-y-4">
+          <div class="flex items-center space-x-2 border-b border-slate-100 pb-2">
+            <span class="text-lg">📋</span>
+            <h3 class="text-base font-bold tracking-wide text-slate-800">(一) 毛孩基本資料</h3>
+          </div>
+
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-medium text-slate-600 mb-1">1. 毛孩名字<span class="required-star">*</span></label>
+              <input type="text" id="petName" data-fieldname="毛孩名字" required class="w-full border border-slate-200 rounded-xl p-2.5 outline-none focus:border-[#1e3d59] focus:ring-2 focus:ring-[#1e3d59]/10 transition-all text-sm">
+            </div>
+            <div>
+              <label class="block text-xs font-medium text-slate-600 mb-1">2. 品種<span class="required-star">*</span></label>
+              <input type="text" id="breed" placeholder="例如: 柴犬" data-fieldname="品種" required class="w-full border border-slate-200 rounded-xl p-2.5 outline-none focus:border-[#1e3d59] focus:ring-2 focus:ring-[#1e3d59]/10 transition-all text-sm">
+            </div>
+          </div>
+
+          <!-- 生日與體重 -->
+          <div class="grid grid-cols-2 gap-4">
+            <div class="min-w-0">
+              <label class="block text-xs font-medium text-slate-600 mb-1">3. 毛孩生日<span class="required-star">*</span></label>
+              <input type="date" id="petBirthday" data-fieldname="毛孩生日" required class="w-full min-w-0 border border-slate-200 rounded-xl p-2.5 outline-none focus:border-[#1e3d59] focus:ring-2 focus:ring-[#1e3d59]/10 transition-all text-sm text-slate-700">
+            </div>
+            <div class="min-w-0">
+              <label class="block text-xs font-medium text-slate-600 mb-1">4. 毛孩體重 (kg)<span class="required-star">*</span></label>
+              <input type="number" step="0.1" min="0" id="petWeight" placeholder="例如: 8.5" data-fieldname="毛孩體重" required class="w-full min-w-0 border border-slate-200 rounded-xl p-2.5 outline-none focus:border-[#1e3d59] focus:ring-2 focus:ring-[#1e3d59]/10 transition-all text-sm">
+            </div>
+          </div>
+
+          <div class="grid grid-cols-4 gap-2">
+            <div>
+              <label class="block text-xs font-medium text-slate-600 mb-1">5. 性別<span class="required-star">*</span></label>
+              <select id="petGender" data-fieldname="性別" required class="w-full border border-slate-200 rounded-xl p-2.5 bg-white text-sm outline-none focus:border-[#1e3d59]">
+                <option value="公">公</option>
+                <option value="母">母</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs font-medium text-slate-600 mb-1">6. 絕育<span class="required-star">*</span></label>
+              <select id="neutered" data-fieldname="絕育" required class="w-full border border-slate-200 rounded-xl p-2.5 bg-white text-sm outline-none focus:border-[#1e3d59]">
+                <option value="無" selected>無</option>
+                <option value="有">有</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs font-medium text-slate-600 mb-1">7. 定期疫苗<span class="required-star">*</span></label>
+              <select id="vaccine" data-fieldname="定期疫苗" required class="w-full border border-slate-200 rounded-xl p-2.5 bg-white text-sm outline-none focus:border-[#1e3d59]">
+                <option value="無" selected>無</option>
+                <option value="有">有</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs font-medium text-slate-600 mb-1">8. 定期驅蟲<span class="required-star">*</span></label>
+              <select id="fleaMedicine" data-fieldname="定期驅蟲" required class="w-full border border-slate-200 rounded-xl p-2.5 bg-white text-sm outline-none focus:border-[#1e3d59]">
+                <option value="無" selected>無</option>
+                <option value="有">有</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-medium text-slate-600 mb-1">9. 攻擊/騎乘行為<span class="required-star">*</span></label>
+              <input type="text" id="aggression" placeholder="無 / 偶爾會 / 討厭大狗" data-fieldname="攻擊或騎乘行為" required class="w-full border border-slate-200 rounded-xl p-2.5 outline-none focus:border-[#1e3d59] focus:ring-2 focus:ring-[#1e3d59]/10 transition-all text-sm">
+            </div>
+            <div>
+              <!-- 晶片號碼限制只能輸入數字 (手機自動彈出數字鍵盤) -->
+              <label class="block text-xs font-medium text-slate-600 mb-1">10. 晶片號碼<span class="required-star">*</span></label>
+              <input type="tel" pattern="[0-9]*" inputmode="numeric" id="chipId" placeholder="無則填寫0" data-fieldname="晶片號碼" required class="w-full border border-slate-200 rounded-xl p-2.5 outline-none focus:border-[#1e3d59] focus:ring-2 focus:ring-[#1e3d59]/10 transition-all text-sm">
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-medium text-slate-600 mb-1">11. 健康狀況、照護餵食禁忌與病史<span class="required-star">*</span></label>
+            <textarea id="notes" rows="2" placeholder="對雞肉過敏、心臟病史、不可碰後腿...無則填寫無" data-fieldname="健康狀況與禁忌" required class="w-full border border-slate-200 rounded-xl p-2.5 outline-none focus:border-[#1e3d59] focus:ring-2 focus:ring-[#1e3d59]/10 transition-all text-sm"></textarea>
+          </div>
+        </div>
+
+        <!-- 2. 飼主基本資料 -->
+        <div class="space-y-4">
+          <div class="flex items-center space-x-2 border-b border-slate-100 pb-2">
+            <span class="text-lg">👤</span>
+            <h3 class="text-base font-bold tracking-wide text-slate-800">(二) 飼主聯絡資訊</h3>
+          </div>
+
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-medium text-slate-600 mb-1">1. 飼主姓名<span class="required-star">*</span></label>
+              <input type="text" id="ownerName" data-fieldname="飼主姓名" required class="w-full border border-slate-200 rounded-xl p-2.5 outline-none focus:border-[#1e3d59] focus:ring-2 focus:ring-[#1e3d59]/10 transition-all text-sm">
+            </div>
+            <div>
+              <!-- 聯絡電話限制只能輸入數字 -->
+              <label class="block text-xs font-medium text-slate-600 mb-1">2. 聯絡電話<span class="required-star">*</span></label>
+              <input type="tel" pattern="[0-9]*" inputmode="numeric" id="phone" placeholder="例如: 0912345678" data-fieldname="聯絡電話" required class="w-full border border-slate-200 rounded-xl p-2.5 outline-none focus:border-[#1e3d59] focus:ring-2 focus:ring-[#1e3d59]/10 transition-all text-sm">
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-medium text-slate-600 mb-1">3. Line ID<span class="required-star">*</span></label>
+              <input type="text" id="lineId" data-fieldname="Line ID" required class="w-full border border-slate-200 rounded-xl p-2.5 outline-none focus:border-[#1e3d59] focus:ring-2 focus:ring-[#1e3d59]/10 transition-all text-sm">
+            </div>
+            <div>
+              <label class="block text-xs font-medium text-slate-600 mb-1">4. 身分證/護照號碼<span class="required-star">*</span></label>
+              <input type="text" id="ownerId" data-fieldname="身分證/護照號碼" required class="w-full border border-slate-200 rounded-xl p-2.5 outline-none focus:border-[#1e3d59] focus:ring-2 focus:ring-[#1e3d59]/10 transition-all text-sm">
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-medium text-slate-600 mb-1">5. 通訊地址<span class="required-star">*</span></label>
+            <input type="text" id="address" data-fieldname="通訊地址" required class="w-full border border-slate-200 rounded-xl p-2.5 outline-none focus:border-[#1e3d59] focus:ring-2 focus:ring-[#1e3d59]/10 transition-all text-sm">
+          </div>
+
+          <!-- 💡 這裡完美拆分為三個欄位：緊急聯絡人、電話、關係 -->
+          <div class="grid grid-cols-3 gap-3">
+            <div>
+              <label class="block text-xs font-medium text-slate-600 mb-1">6. 緊急聯絡人<span class="required-star">*</span></label>
+              <input type="text" id="emergencyContact" data-fieldname="緊急聯絡人" placeholder="姓名" required class="w-full border border-slate-200 rounded-xl p-2.5 outline-none focus:border-[#1e3d59] focus:ring-2 focus:ring-[#1e3d59]/10 transition-all text-sm">
+            </div>
+            <div>
+              <label class="block text-xs font-medium text-slate-600 mb-1">7. 聯絡電話<span class="required-star">*</span></label>
+              <input type="tel" pattern="[0-9]*" inputmode="numeric" id="emergencyPhone" data-fieldname="緊急聯絡電話" placeholder="09xxxxxxxx" required class="w-full border border-slate-200 rounded-xl p-2.5 outline-none focus:border-[#1e3d59] focus:ring-2 focus:ring-[#1e3d59]/10 transition-all text-sm">
+            </div>
+            <div>
+              <label class="block text-xs font-medium text-slate-600 mb-1">8. 關係<span class="required-star">*</span></label>
+              <input type="text" id="emergencyRelation" data-fieldname="緊急聯絡人關係" placeholder="例如: 夫妻" required class="w-full border border-slate-200 rounded-xl p-2.5 outline-none focus:border-[#1e3d59] focus:ring-2 focus:ring-[#1e3d59]/10 transition-all text-sm">
+            </div>
+          </div>
+        </div>
+
+        <!-- 質感「下一步」按鈕 -->
+        <button type="button" onclick="validateAndNextStep()" class="w-full text-white font-bold py-3.5 rounded-xl transition duration-200 shadow-md text-base flex items-center justify-center space-x-2" style="background-color: #1e3d59;">
+          <span>進入條款與合約簽署</span>
+          <span>➡️</span>
+        </button>
+      </div>
+
+
+      <!-- ==================== 第二頁：合約與簽名 (預設隱藏) ==================== -->
+      <div id="step2-container" class="hidden space-y-6">
+
+        <!-- 3. 同意書與授權 -->
+        <div class="space-y-4">
+          <div class="flex items-center space-x-2 border-b border-slate-100 pb-2">
+            <span class="text-lg">🛡️</span>
+            <h3 class="text-base font-bold text-slate-800">(三) 同意書與授權<span class="required-star">*</span></h3>
+          </div>
+
+          <div id="medicalBox" class="space-y-2 bg-slate-50 p-3.5 rounded-xl border border-slate-100 transition-all">
+            <p class="text-xs font-bold text-slate-700">🩺 緊急醫療授權 (請二選一)：<span class="required-star">*</span></p>
+            <label class="flex items-start cursor-pointer py-1 text-xs text-slate-600">
+              <input type="radio" name="medicalAuth" value="同意代為決定醫療行為" class="mt-0.5 mr-2 text-[#1e3d59] focus:ring-[#1e3d59]">
+              <span>同意在緊急情況下由店家代為決定醫療行為，醫療費用由飼主承擔。</span>
+            </label>
+            <label class="flex items-start cursor-pointer py-1 text-xs text-slate-600">
+              <input type="radio" name="medicalAuth" value="聯絡後才可醫療" class="mt-0.5 mr-2 text-[#1e3d59] focus:ring-[#1e3d59]">
+              <span>僅在成功聯繫到我後才可進行醫療行為。</span>
+            </label>
+          </div>
+
+          <div id="socialBox" class="space-y-2 bg-slate-50 p-3.5 rounded-xl border border-slate-100 transition-all">
+            <p class="text-xs font-bold text-slate-700">📸 社交平台使用同意 (請二選一)：<span class="required-star">*</span></p>
+            <label class="flex items-start cursor-pointer py-1 text-xs text-slate-600">
+              <input type="radio" name="socialMediaAuth" value="同意發佈社群媒體" class="mt-0.5 mr-2 text-[#1e3d59] focus:ring-[#1e3d59]">
+              <span>同意：授權店家將狗狗在館內拍攝的照片或影片發佈於社群媒體。</span>
+            </label>
+            <label class="flex items-start cursor-pointer py-1 text-xs text-slate-600">
+              <input type="radio" name="socialMediaAuth" value="不同意發佈" class="mt-0.5 mr-2 text-[#1e3d59] focus:ring-[#1e3d59]">
+              <span>不同意：不授權店家將照片或影片發佈於任何社交媒體。</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- 4. 淘狗寵物寄宿及日托服務會員合約 -->
+        <div class="space-y-3">
+          <div class="flex items-center space-x-2 border-b border-slate-100 pb-2">
+            <span class="text-lg">📜</span>
+            <h3 class="text-base font-bold text-slate-800">(四) 淘狗寵物會員合約條款</h3>
+          </div>
+
+          <!-- 銀行級閱讀鎖定框 -->
+          <div id="contractBox" class="contract-box h-72 overflow-y-scroll p-4 bg-slate-50 rounded-xl text-xs text-slate-600 space-y-4 border border-slate-200 leading-relaxed">
+            <p class="font-bold text-slate-900 text-sm text-center border-b pb-2">淘狗寵物寄宿及日托服務會員合約</p>
+
+            <p class="font-bold text-slate-900">🕒 營業時間與接送規定</p>
+            <ul class="list-disc pl-5 space-y-1">
+              <li>明細規範：請參考官方最新公告之營業時間明細表格。</li>
+              <li>平日：8:00 ~ 20:30；假日：9:30 ~ 20:30。最晚辦理入住時間為 <strong>20:00</strong>，超過加收 <strong>200元</strong>。</li>
+              <li>接回時間若超過最後接回時間 <strong>20:15</strong>，則視為再委託一日住宿，並額外加收一晚住宿明細費。</li>
+              <li>若超過約定時間 <strong>72小時</strong> 聯繫無果，將視為惡意棄養，本館有權依動物保護法處置。</li>
+            </ul>
+
+            <p class="font-bold text-slate-900">🐕 服務項目與適應</p>
+            <ul class="list-disc pl-5 space-y-1">
+              <li><strong>安親 (日托)</strong>：每次至少 4 小時計算，不滿 4 小時仍以 4 小時計。</li>
+              <li><strong>住宿 (寄託)</strong>：每次以 24 小時計算。超時按實際收費情形加收每小時安親費。</li>
+              <li>為了讓寵物適應，<strong>第一次住宿需提前至少一天辦理安親適應</strong>，不可在住宿當天直接辦理。</li>
+            </ul>
+
+            <p class="font-bold text-slate-900">💰 訂金與解約退費標準</p>
+            <p>預約住宿須先支付總住宿費用的 <strong>20% 做為訂金</strong>。取消退費明細標準如下：</p>
+            <div class="bg-white p-3 rounded-lg border text-xs space-y-1 text-slate-500 font-mono">
+              <p>• 付款後 14 日前申請：退還訂金 100%</p>
+              <p>• 付款後 10~13 日內：退還訂金 70%</p>
+              <p>• 付款後 7~9 日內：退還訂金 50%</p>
+              <p>• 付款後 4~6 日內：退還訂金 40%</p>
+              <p>• 付款後 2~3 日內：退還訂金 30%</p>
+              <p>• 入住前 1 日內：退還訂金 20%</p>
+              <p>• 入住當日申請：訂金不予退還</p>
+            </div>
+
+            <p class="font-bold text-slate-900">🩺 醫療處理與免責聲明</p>
+            <ul class="list-disc pl-5 space-y-1">
+              <li>若寵物身體不適，我們會及時告知負責人或飼主，必要時送往獸醫院。所有醫療、交通及外診明細費（每小時 200 元）由飼主全額負擔。</li>
+              <li>非因本館過失或因寵物自身疾病導致之傷亡，本館免責。可歸責本館之傷亡，最高賠償上限為新台幣 <strong>2萬元</strong>。</li>
+            </ul>
+
+            <p id="contractBottom" class="text-center font-bold text-emerald-600 border-t pt-3 mt-3">💡 已閱讀至合約最底部，現在您可以進行勾選同意了</p>
+          </div>
+        </div>
+
+        <!-- 銀行級防呆勾選框 -->
+        <div class="text-center my-4 bg-slate-50 py-3 rounded-xl border border-dashed border-slate-200">
+          <label id="checkboxLabel" class="flex items-center justify-center text-xs font-bold text-slate-400 cursor-not-allowed select-none">
+            <input type="checkbox" id="agreeCheckbox" disabled class="w-4 h-4 text-[#1e3d59] border-slate-300 rounded focus:ring-[#1e3d59] mr-2 cursor-not-allowed">
+            <span>✨ 本人已滿十八歲，已詳讀且同意以上所有條款內容</span>
+          </label>
+          <p id="scrollHint" class="text-[10px] text-red-400 mt-1">⚠️ 請先向下滑動閱讀完完整合約明細，方可勾選</p>
+        </div>
+
+        <!-- 5. 電子手寫簽名 -->
+        <div class="space-y-2">
+          <label class="block text-xs font-bold text-slate-700">✍️ 請在下方方框內手寫您的中文全名：<span class="required-star">*</span></label>
+          <canvas id="signature-pad" class="w-full h-36 rounded-xl shadow-inner"></canvas>
+          <div class="flex justify-end">
+            <button type="button" onclick="clearSignature()" class="text-[11px] text-slate-400 border border-slate-200 rounded-lg px-2.5 py-1 hover:bg-slate-50 transition">
+              🧹 重寫 / 清除
+            </button>
+          </div>
+        </div>
+
+        <!-- 按鈕組 -->
+        <div class="flex space-x-3 pt-2">
+          <button type="button" onclick="prevStep()" class="w-1/3 bg-slate-100 hover:bg-slate-200 text-slate-600 font-medium py-3.5 rounded-xl transition text-sm">
+            ⬅️ 返回修改
+          </button>
+          <button type="submit" id="submitBtn" class="w-2/3 text-white font-bold py-3.5 rounded-xl transition duration-150 shadow-md text-sm flex items-center justify-center" style="background-color: #ffc13b; color: #1e3d59;">
+            🖋️ 簽署完畢並確認送出
+          </button>
+        </div>
+      </div>
+
+    </form>
+
+    <!-- ==================== 💎 成功跳轉畫面 (預設隱藏) ==================== -->
+    <div id="success-container" class="hidden text-center py-12 px-6 bg-white rounded-2xl shadow-xl border border-slate-100 border-t-8 border-emerald-500 space-y-6">
+      <div class="inline-flex items-center justify-center w-20 h-20 bg-emerald-50 text-emerald-500 rounded-full text-4xl shadow-sm">
+        ✔
+      </div>
+      <div class="space-y-2">
+        <h2 class="text-2xl font-bold text-slate-800">資料已成功提交，歡迎加入！</h2>
+        <p class="text-sm text-slate-400">毛孩的專屬會員檔案已安全建檔完畢</p>
+      </div>
+
+      <!-- 尊榮資訊卡片 -->
+      <div class="bg-slate-50 p-6 rounded-xl border border-slate-100 text-left max-w-sm mx-auto space-y-3">
+        <div class="flex justify-between border-b border-slate-200/60 pb-2">
+          <span class="text-xs text-slate-400">尊榮會員序號</span>
+          <span id="res-serial" class="text-sm font-bold text-[#1e3d59]">--</span>
+        </div>
+        <div class="flex justify-between border-b border-slate-200/60 pb-2">
+          <span class="text-xs text-slate-400">毛孩名字</span>
+          <span id="res-petName" class="text-sm font-bold text-slate-700">--</span>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-xs text-slate-400">登記狀態</span>
+          <span class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800">已生效 Active</span>
+        </div>
+      </div>
+
+      <p class="text-xs text-slate-400 max-w-xs mx-auto leading-relaxed">
+        感謝您對「淘狗寵物 PREMIUM」的支持。如果需要查詢、修改資料或預約服務，隨時在官方 LINE 告訴我們。
+      </p>
+
+      <button type="button" onclick="resetFormToStart()" class="inline-flex items-center space-x-2 text-xs font-bold text-[#1e3d59] border border-slate-200 bg-slate-50 px-4 py-2 rounded-xl hover:bg-slate-100 transition">
+        <span>🔄 登記下一隻毛孩</span>
+      </button>
+    </div>
+  </div>
+
+  <script>
+    // ==================== 後端 API 連線設定 ====================
+    // 這裡指向 Google Apps Script 的正式部署網址，前端改用 fetch() 呼叫，取代原本的 google.script.run
+    const APPS_SCRIPT_API_URL = "https://script.google.com/macros/s/AKfycbytLkAlJnn_gHwOBhQr-xnJ_QwcxtLpL_4uO7dqPpu79BnG5NvdY_iSAxZZNQVpk4ZQ/exec";
+
+    function callAppsScriptApi(action, payload) {
+      // Content-Type 故意用 text/plain，避免瀏覽器對跨網域 POST 發出 CORS 預檢請求
+      // (Apps Script 無法正確回應 OPTIONS 預檢，用 text/plain 屬於「簡單請求」可以繞過)
+      return fetch(APPS_SCRIPT_API_URL, {
+        method: "POST",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify({ action: action, payload: payload })
+      }).then(res => res.json());
+    }
+
+    const canvas = document.getElementById('signature-pad');
+    const ctx = canvas.getContext('2d');
+    let isDrawing = false;
+    let isSignatureEmpty = true; // 用來防呆，確保家長確實有簽名
+
+    function resizeCanvas() {
+      const ratio = Math.max(window.devicePixelRatio || 1, 1);
+      canvas.width = canvas.offsetWidth * ratio;
+      canvas.height = canvas.offsetHeight * ratio;
+      ctx.scale(ratio, ratio);
+      ctx.lineWidth = 3.5;
+      ctx.lineCap = 'round';
+      ctx.strokeStyle = '#1e3d59'; // 質感深藍色簽名
+    }
+    window.addEventListener('resize', resizeCanvas);
+
+    // ==================== 第一頁防呆：由上到下引導 ====================
+    function validateAndNextStep() {
+      const inputs = document.querySelectorAll('#step1-container input[required], #step1-container textarea[required], #step1-container select[required]');
+      let firstInvalidInput = null;
+
+      inputs.forEach(input => {
+        input.classList.remove('border-red-400', 'bg-red-50/30');
+      });
+
+      for (let i = 0; i < inputs.length; i++) {
+        const input = inputs[i];
+        if (!input.value.trim() || input.value === "") {
+          firstInvalidInput = input;
+          break;
+        }
+      }
+
+      if (firstInvalidInput) {
+        firstInvalidInput.classList.add('border-red-400', 'bg-red-50/30');
+        firstInvalidInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+        setTimeout(() => {
+          firstInvalidInput.focus();
+          const fieldName = firstInvalidInput.getAttribute('data-fieldname') || '欄位';
+          alert(`📌 請填寫「${fieldName}」欄位才能進入下一步喔！`);
+        }, 400);
+        return;
+      }
+
+      // 切換至第二頁，並強制讓瀏覽器滾動回最頂部
+      document.getElementById('step1-container').classList.add('hidden');
+      document.getElementById('step2-container').classList.remove('hidden');
+
+      document.getElementById('top-anchor').scrollIntoView({ behavior: 'smooth' });
+
+      // 更新進度條
+      document.getElementById('badge-step1').className = "text-xs px-3 py-1 font-medium rounded-full bg-slate-200 text-slate-500";
+      document.getElementById('badge-step2').className = "text-xs px-3 py-1 font-medium rounded-full bg-[#1e3d59] text-white";
+
+      // 重算簽名板尺寸
+      setTimeout(resizeCanvas, 100);
+    }
+
+    function prevStep() {
+      document.getElementById('step2-container').classList.add('hidden');
+      document.getElementById('step1-container').classList.remove('hidden');
+
+      document.getElementById('top-anchor').scrollIntoView({ behavior: 'smooth' });
+
+      document.getElementById('badge-step1').className = "text-xs px-3 py-1 font-medium rounded-full bg-[#1e3d59] text-white";
+      document.getElementById('badge-step2').className = "text-xs px-3 py-1 font-medium rounded-full bg-slate-200 text-slate-500";
+    }
+
+    // ==================== 銀行級合約滾動解鎖機制 ====================
+    const contractBox = document.getElementById('contractBox');
+    const agreeCheckbox = document.getElementById('agreeCheckbox');
+    const checkboxLabel = document.getElementById('checkboxLabel');
+    const scrollHint = document.getElementById('scrollHint');
+
+    contractBox.addEventListener('scroll', function() {
+      if (contractBox.scrollTop + contractBox.clientHeight >= contractBox.scrollHeight - 10) {
+        agreeCheckbox.disabled = false;
+        agreeCheckbox.classList.remove('cursor-not-allowed');
+        agreeCheckbox.classList.add('cursor-pointer');
+        checkboxLabel.classList.remove('text-slate-400', 'cursor-not-allowed');
+        checkboxLabel.classList.add('text-[#1e3d59]', 'cursor-pointer');
+        scrollHint.className = "text-[10px] text-emerald-500 mt-1 font-medium";
+        scrollHint.innerText = "✨ 合約已確認閱讀完畢，現在可以勾選。";
+      }
+    });
+
+    // ==================== 手寫簽名板邏輯 ====================
+    function getEventPos(e) {
+      const rect = canvas.getBoundingClientRect();
+      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+      const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+      return { x: clientX - rect.left, y: clientY - rect.top };
+    }
+
+    canvas.addEventListener('mousedown', (e) => {
+      isDrawing = true;
+      isSignatureEmpty = false;
+      const pos = getEventPos(e);
+      ctx.beginPath();
+      ctx.moveTo(pos.x, pos.y);
+    });
+    canvas.addEventListener('mousemove', (e) => { if (!isDrawing) return; e.preventDefault(); const pos = getEventPos(e); ctx.lineTo(pos.x, pos.y); ctx.stroke(); });
+    canvas.addEventListener('mouseup', () => isDrawing = false);
+    canvas.addEventListener('mouseleave', () => isDrawing = false);
+
+    canvas.addEventListener('touchstart', (e) => {
+      isDrawing = true;
+      isSignatureEmpty = false;
+      const pos = getEventPos(e);
+      ctx.beginPath();
+      ctx.moveTo(pos.x, pos.y);
+    }, {passive: false});
+    canvas.addEventListener('touchmove', (e) => { if (!isDrawing) return; e.preventDefault(); const pos = getEventPos(e); ctx.lineTo(pos.x, pos.y); ctx.stroke(); }, {passive: false});
+    canvas.addEventListener('touchend', () => isDrawing = false);
+
+    function clearSignature() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      isSignatureEmpty = true;
+    }
+
+    // ==================== 送出表單 ====================
+    function handleRegSubmit(e) {
+      e.preventDefault();
+
+      const medicalChecked = document.querySelector('input[name="medicalAuth"]:checked');
+      const socialChecked = document.querySelector('input[name="socialMediaAuth"]:checked');
+      const medicalBox = document.getElementById("medicalBox");
+      const socialBox = document.getElementById("socialBox");
+
+      // 1. 同意書防呆：緊急醫療
+      if (!medicalChecked) {
+        medicalBox.classList.add('border-red-400', 'bg-red-50/50');
+        medicalBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        alert("📌 請選取「(三) 緊急醫療授權」選項！");
+        return;
+      } else {
+        medicalBox.classList.remove('border-red-400', 'bg-red-50/50');
+      }
+
+      // 2. 同意書防呆：社群授權
+      if (!socialChecked) {
+        socialBox.classList.add('border-red-400', 'bg-red-50/50');
+        socialBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        alert("📌 請選取「(三) 社交平台使用同意」選項！");
+        return;
+      } else {
+        socialBox.classList.remove('border-red-400', 'bg-red-50/50');
+      }
+
+      // 3. 合約同意勾選框防呆
+      if (agreeCheckbox.disabled || !agreeCheckbox.checked) {
+        alert("📌 請務必將合約明細向下滑動閱讀至最底部，並勾選同意條款方能送出。");
+        return;
+      }
+
+      // 4. 手寫簽名防呆
+      if (isSignatureEmpty) {
+        alert("📌 請手寫您的中文全名完成簽署！");
+        return;
+      }
+
+      const btn = document.getElementById("submitBtn");
+      const sigData = canvas.toDataURL("image/png");
+      const petNameInput = document.getElementById("petName").value;
+
+      btn.disabled = true;
+      btn.innerText = "⏳ 正在處理安全合約與上傳...";
+
+      const payload = {
+        petName: petNameInput,
+        breed: document.getElementById("breed").value,
+        petBirthday: document.getElementById("petBirthday").value,
+        petWeight: document.getElementById("petWeight").value,
+        petGender: document.getElementById("petGender").value,
+        neutered: document.getElementById("neutered").value,
+        vaccine: document.getElementById("vaccine").value,
+        fleaMedicine: document.getElementById("fleaMedicine").value,
+        aggression: document.getElementById("aggression").value,
+        chipId: document.getElementById("chipId").value,
+        notes: document.getElementById("notes").value,
+        ownerName: document.getElementById("ownerName").value,
+        phone: document.getElementById("phone").value,
+        lineId: document.getElementById("lineId").value,
+        address: document.getElementById("address").value,
+        ownerId: document.getElementById("ownerId").value,
+        emergencyContact: document.getElementById("emergencyContact").value,
+        emergencyPhone: document.getElementById("emergencyPhone").value,
+        emergencyRelation: document.getElementById("emergencyRelation").value,
+        medicalAuth: medicalChecked.value,
+        socialMediaAuth: socialChecked.value,
+        signatureBase64: sigData
+      };
+
+      callAppsScriptApi("submitClientRegistration", payload)
+        .then(function(response) {
+          if (response.success) {
+            document.getElementById("regForm").classList.add("hidden");
+            document.getElementById("header-area").classList.add("hidden");
+
+            document.getElementById("res-serial").innerText = response.serial;
+            document.getElementById("res-petName").innerText = petNameInput;
+
+            document.getElementById("success-container").classList.remove("hidden");
+            document.getElementById('top-anchor').scrollIntoView({ behavior: 'smooth' });
+          } else {
+            alert("❌ 註冊失敗: " + response.error);
+            btn.disabled = false;
+            btn.innerText = "🖋️ 簽署完畢並確認送出";
+          }
+        })
+        .catch(function(err) {
+          alert("❌ 連線失敗，請檢查網路後再試一次: " + err.message);
+          btn.disabled = false;
+          btn.innerText = "🖋️ 簽署完畢並確認送出";
+        });
+    }
+
+    // 重設表單，讓家長可以重新填下一隻狗狗
+    function resetFormToStart() {
+      document.getElementById("regForm").reset();
+      clearSignature();
+
+      // 重置合約鎖定與預設值
+      agreeCheckbox.disabled = true;
+      checkboxLabel.className = "flex items-center justify-center text-xs font-bold text-slate-400 cursor-not-allowed select-none";
+      scrollHint.className = "text-[10px] text-red-400 mt-1";
+      scrollHint.innerText = "⚠️ 請先向下滑動閱讀完完整合約明細，方可勾選";
+
+      // 重置頁面與進度顯示
+      document.getElementById("success-container").classList.add("hidden");
+      document.getElementById("header-area").classList.remove("hidden");
+      document.getElementById("regForm").classList.remove("hidden");
+
+      prevStep();
+    }
+  </script>
+</body>
+</html>
