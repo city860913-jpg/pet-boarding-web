@@ -161,11 +161,6 @@
             <input type="text" id="address" data-fieldname="通訊地址" required class="w-full border border-slate-200 rounded-xl p-2.5 outline-none focus:border-[#1e3d59] focus:ring-2 focus:ring-[#1e3d59]/10 transition-all text-sm">
           </div>
 
-          <div>
-            <label class="block text-xs font-medium text-slate-600 mb-1">Email（選填，填寫後合約副本會自動寄送到這個信箱）</label>
-            <input type="email" id="email" placeholder="example@email.com" class="w-full border border-slate-200 rounded-xl p-2.5 outline-none focus:border-[#1e3d59] focus:ring-2 focus:ring-[#1e3d59]/10 transition-all text-sm">
-          </div>
-
           <!-- 💡 這裡完美拆分為三個欄位：緊急聯絡人、電話、關係 -->
           <div class="grid grid-cols-3 gap-3">
             <div>
@@ -338,7 +333,6 @@
         <a id="contractPdfLink" href="#" target="_blank" class="inline-flex items-center justify-center space-x-2 w-full text-white font-bold py-3 rounded-xl transition shadow-md text-sm" style="background-color: #1e3d59;">
           <span>📄 下載合約副本 (PDF)</span>
         </a>
-        <p id="contractEmailNote" class="hidden text-xs text-slate-400">✉️ 副本也已寄送到您留的 Email，請留意收件匣。</p>
       </div>
 
       <p class="text-xs text-slate-400 max-w-xs mx-auto leading-relaxed">
@@ -551,7 +545,6 @@
         phone: document.getElementById("phone").value,
         lineId: document.getElementById("lineId").value,
         address: document.getElementById("address").value,
-        email: document.getElementById("email").value,
         ownerId: document.getElementById("ownerId").value,
         emergencyContact: document.getElementById("emergencyContact").value,
         emergencyPhone: document.getElementById("emergencyPhone").value,
@@ -573,7 +566,6 @@
             if (response.pdfUrl) {
               document.getElementById("contractPdfLink").href = response.pdfUrl;
               document.getElementById("contractPdfBox").classList.remove("hidden");
-              document.getElementById("contractEmailNote").classList.toggle("hidden", !response.emailSent);
             }
 
             document.getElementById("success-container").classList.remove("hidden");
