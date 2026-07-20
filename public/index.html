@@ -47,84 +47,94 @@
       <!-- ==================== 第一頁：基本資料 ==================== -->
       <div id="step1-container" class="space-y-8">
 
-        <!-- 1. 毛孩基本資料 -->
-        <div class="space-y-4">
-          <div class="flex items-center space-x-2 border-b border-slate-100 pb-2">
-            <span class="text-lg">📋</span>
-            <h3 class="text-base font-bold tracking-wide text-slate-800">(一) 毛孩基本資料</h3>
-          </div>
+        <!-- 1. 毛孩基本資料（多犬家庭可點下方「＋」新增） -->
+        <div id="petBlocksContainer" class="space-y-6">
+          <div class="pet-block space-y-4" data-pet-index="0">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-2">
+              <div class="flex items-center space-x-2">
+                <span class="text-lg">📋</span>
+                <h3 class="pet-block-title text-base font-bold tracking-wide text-slate-800">(一) 毛孩基本資料</h3>
+              </div>
+              <button type="button" class="remove-pet-btn hidden text-xs text-rose-500 font-medium px-2 py-1 rounded-lg hover:bg-rose-50 transition" onclick="removePetBlock(this)">✕ 移除這隻</button>
+            </div>
 
-          <div class="grid grid-cols-2 gap-4">
-            <div>
-              <label class="block text-xs font-medium text-slate-600 mb-1">1. 毛孩名字<span class="required-star">*</span></label>
-              <input type="text" id="petName" data-fieldname="毛孩名字" required class="w-full border border-slate-200 rounded-xl p-2.5 outline-none focus:border-[#1e3d59] focus:ring-2 focus:ring-[#1e3d59]/10 transition-all text-sm">
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <label class="block text-xs font-medium text-slate-600 mb-1">1. 毛孩名字<span class="required-star">*</span></label>
+                <input type="text" data-key="petName" data-fieldname="毛孩名字" required class="w-full border border-slate-200 rounded-xl p-2.5 outline-none focus:border-[#1e3d59] focus:ring-2 focus:ring-[#1e3d59]/10 transition-all text-sm">
+              </div>
+              <div>
+                <label class="block text-xs font-medium text-slate-600 mb-1">2. 品種<span class="required-star">*</span></label>
+                <input type="text" data-key="breed" placeholder="例如: 柴犬" data-fieldname="品種" required class="w-full border border-slate-200 rounded-xl p-2.5 outline-none focus:border-[#1e3d59] focus:ring-2 focus:ring-[#1e3d59]/10 transition-all text-sm">
+              </div>
             </div>
-            <div>
-              <label class="block text-xs font-medium text-slate-600 mb-1">2. 品種<span class="required-star">*</span></label>
-              <input type="text" id="breed" placeholder="例如: 柴犬" data-fieldname="品種" required class="w-full border border-slate-200 rounded-xl p-2.5 outline-none focus:border-[#1e3d59] focus:ring-2 focus:ring-[#1e3d59]/10 transition-all text-sm">
-            </div>
-          </div>
 
-          <!-- 生日與體重 -->
-          <div class="grid grid-cols-2 gap-4">
-            <div class="min-w-0">
-              <label class="block text-xs font-medium text-slate-600 mb-1">3. 毛孩生日<span class="required-star">*</span></label>
-              <input type="date" id="petBirthday" data-fieldname="毛孩生日" required class="w-full min-w-0 border border-slate-200 rounded-xl p-2.5 outline-none focus:border-[#1e3d59] focus:ring-2 focus:ring-[#1e3d59]/10 transition-all text-sm text-slate-700">
+            <!-- 生日與體重 -->
+            <div class="grid grid-cols-2 gap-4">
+              <div class="min-w-0">
+                <label class="block text-xs font-medium text-slate-600 mb-1">3. 毛孩生日<span class="required-star">*</span></label>
+                <input type="date" data-key="petBirthday" data-fieldname="毛孩生日" required class="w-full min-w-0 border border-slate-200 rounded-xl p-2.5 outline-none focus:border-[#1e3d59] focus:ring-2 focus:ring-[#1e3d59]/10 transition-all text-sm text-slate-700">
+              </div>
+              <div class="min-w-0">
+                <label class="block text-xs font-medium text-slate-600 mb-1">4. 毛孩體重 (kg)<span class="required-star">*</span></label>
+                <input type="number" step="0.1" min="0" data-key="petWeight" placeholder="例如: 8.5" data-fieldname="毛孩體重" required class="w-full min-w-0 border border-slate-200 rounded-xl p-2.5 outline-none focus:border-[#1e3d59] focus:ring-2 focus:ring-[#1e3d59]/10 transition-all text-sm">
+              </div>
             </div>
-            <div class="min-w-0">
-              <label class="block text-xs font-medium text-slate-600 mb-1">4. 毛孩體重 (kg)<span class="required-star">*</span></label>
-              <input type="number" step="0.1" min="0" id="petWeight" placeholder="例如: 8.5" data-fieldname="毛孩體重" required class="w-full min-w-0 border border-slate-200 rounded-xl p-2.5 outline-none focus:border-[#1e3d59] focus:ring-2 focus:ring-[#1e3d59]/10 transition-all text-sm">
-            </div>
-          </div>
 
-          <div class="grid grid-cols-4 gap-2">
-            <div>
-              <label class="block text-xs font-medium text-slate-600 mb-1">5. 性別<span class="required-star">*</span></label>
-              <select id="petGender" data-fieldname="性別" required class="w-full border border-slate-200 rounded-xl p-2.5 bg-white text-sm outline-none focus:border-[#1e3d59]">
-                <option value="公">公</option>
-                <option value="母">母</option>
-              </select>
+            <div class="grid grid-cols-4 gap-2">
+              <div>
+                <label class="block text-xs font-medium text-slate-600 mb-1">5. 性別<span class="required-star">*</span></label>
+                <select data-key="petGender" data-fieldname="性別" required class="w-full border border-slate-200 rounded-xl p-2.5 bg-white text-sm outline-none focus:border-[#1e3d59]">
+                  <option value="公">公</option>
+                  <option value="母">母</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-xs font-medium text-slate-600 mb-1">6. 絕育<span class="required-star">*</span></label>
+                <select data-key="neutered" data-fieldname="絕育" required class="w-full border border-slate-200 rounded-xl p-2.5 bg-white text-sm outline-none focus:border-[#1e3d59]">
+                  <option value="無" selected>無</option>
+                  <option value="有">有</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-xs font-medium text-slate-600 mb-1">7. 定期疫苗<span class="required-star">*</span></label>
+                <select data-key="vaccine" data-fieldname="定期疫苗" required class="w-full border border-slate-200 rounded-xl p-2.5 bg-white text-sm outline-none focus:border-[#1e3d59]">
+                  <option value="無" selected>無</option>
+                  <option value="有">有</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-xs font-medium text-slate-600 mb-1">8. 定期驅蟲<span class="required-star">*</span></label>
+                <select data-key="fleaMedicine" data-fieldname="定期驅蟲" required class="w-full border border-slate-200 rounded-xl p-2.5 bg-white text-sm outline-none focus:border-[#1e3d59]">
+                  <option value="無" selected>無</option>
+                  <option value="有">有</option>
+                </select>
+              </div>
             </div>
-            <div>
-              <label class="block text-xs font-medium text-slate-600 mb-1">6. 絕育<span class="required-star">*</span></label>
-              <select id="neutered" data-fieldname="絕育" required class="w-full border border-slate-200 rounded-xl p-2.5 bg-white text-sm outline-none focus:border-[#1e3d59]">
-                <option value="無" selected>無</option>
-                <option value="有">有</option>
-              </select>
-            </div>
-            <div>
-              <label class="block text-xs font-medium text-slate-600 mb-1">7. 定期疫苗<span class="required-star">*</span></label>
-              <select id="vaccine" data-fieldname="定期疫苗" required class="w-full border border-slate-200 rounded-xl p-2.5 bg-white text-sm outline-none focus:border-[#1e3d59]">
-                <option value="無" selected>無</option>
-                <option value="有">有</option>
-              </select>
-            </div>
-            <div>
-              <label class="block text-xs font-medium text-slate-600 mb-1">8. 定期驅蟲<span class="required-star">*</span></label>
-              <select id="fleaMedicine" data-fieldname="定期驅蟲" required class="w-full border border-slate-200 rounded-xl p-2.5 bg-white text-sm outline-none focus:border-[#1e3d59]">
-                <option value="無" selected>無</option>
-                <option value="有">有</option>
-              </select>
-            </div>
-          </div>
 
-          <div class="grid grid-cols-2 gap-4">
-            <div>
-              <label class="block text-xs font-medium text-slate-600 mb-1">9. 攻擊/騎乘行為<span class="required-star">*</span></label>
-              <input type="text" id="aggression" placeholder="無 / 偶爾會 / 討厭大狗" data-fieldname="攻擊或騎乘行為" required class="w-full border border-slate-200 rounded-xl p-2.5 outline-none focus:border-[#1e3d59] focus:ring-2 focus:ring-[#1e3d59]/10 transition-all text-sm">
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <label class="block text-xs font-medium text-slate-600 mb-1">9. 攻擊/騎乘行為<span class="required-star">*</span></label>
+                <input type="text" data-key="aggression" placeholder="無 / 偶爾會 / 討厭大狗" data-fieldname="攻擊或騎乘行為" required class="w-full border border-slate-200 rounded-xl p-2.5 outline-none focus:border-[#1e3d59] focus:ring-2 focus:ring-[#1e3d59]/10 transition-all text-sm">
+              </div>
+              <div>
+                <!-- 晶片號碼限制只能輸入數字 (手機自動彈出數字鍵盤) -->
+                <label class="block text-xs font-medium text-slate-600 mb-1">10. 晶片號碼<span class="required-star">*</span></label>
+                <input type="tel" pattern="[0-9]*" inputmode="numeric" data-key="chipId" placeholder="無則填寫0" data-fieldname="晶片號碼" required class="w-full border border-slate-200 rounded-xl p-2.5 outline-none focus:border-[#1e3d59] focus:ring-2 focus:ring-[#1e3d59]/10 transition-all text-sm">
+              </div>
             </div>
-            <div>
-              <!-- 晶片號碼限制只能輸入數字 (手機自動彈出數字鍵盤) -->
-              <label class="block text-xs font-medium text-slate-600 mb-1">10. 晶片號碼<span class="required-star">*</span></label>
-              <input type="tel" pattern="[0-9]*" inputmode="numeric" id="chipId" placeholder="無則填寫0" data-fieldname="晶片號碼" required class="w-full border border-slate-200 rounded-xl p-2.5 outline-none focus:border-[#1e3d59] focus:ring-2 focus:ring-[#1e3d59]/10 transition-all text-sm">
-            </div>
-          </div>
 
-          <div>
-            <label class="block text-xs font-medium text-slate-600 mb-1">11. 健康狀況、照護餵食禁忌與病史<span class="required-star">*</span></label>
-            <textarea id="notes" rows="2" placeholder="對雞肉過敏、心臟病史、不可碰後腿...無則填寫無" data-fieldname="健康狀況與禁忌" required class="w-full border border-slate-200 rounded-xl p-2.5 outline-none focus:border-[#1e3d59] focus:ring-2 focus:ring-[#1e3d59]/10 transition-all text-sm"></textarea>
+            <div>
+              <label class="block text-xs font-medium text-slate-600 mb-1">11. 健康狀況、照護餵食禁忌與病史<span class="required-star">*</span></label>
+              <textarea data-key="notes" rows="2" placeholder="對雞肉過敏、心臟病史、不可碰後腿...無則填寫無" data-fieldname="健康狀況與禁忌" required class="w-full border border-slate-200 rounded-xl p-2.5 outline-none focus:border-[#1e3d59] focus:ring-2 focus:ring-[#1e3d59]/10 transition-all text-sm"></textarea>
+            </div>
           </div>
         </div>
+
+        <button type="button" onclick="addPetBlock()" class="w-full border-2 border-dashed border-[#1e3d59]/30 text-[#1e3d59] font-semibold py-2.5 rounded-xl text-sm hover:bg-[#1e3d59]/5 transition-all flex items-center justify-center space-x-1.5">
+          <span class="text-lg leading-none">＋</span>
+          <span>多犬家庭？新增一隻毛孩</span>
+        </button>
 
         <!-- 2. 飼主基本資料 -->
         <div class="space-y-4">
@@ -437,6 +447,35 @@
     }
     window.addEventListener('resize', resizeCanvas);
 
+    // ==================== 多犬家庭：新增／移除毛孩區塊 ====================
+    function addPetBlock() {
+      const container = document.getElementById('petBlocksContainer');
+      const first = container.querySelector('.pet-block');
+      const clone = first.cloneNode(true);
+
+      clone.querySelectorAll('input, textarea').forEach(el => { el.value = ''; el.classList.remove('border-red-400', 'bg-red-50/30'); });
+      clone.querySelectorAll('select').forEach(el => { el.selectedIndex = 0; });
+      clone.querySelector('.remove-pet-btn').classList.remove('hidden');
+
+      container.appendChild(clone);
+      renumberPetBlocks();
+      clone.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    function removePetBlock(btn) {
+      btn.closest('.pet-block').remove();
+      renumberPetBlocks();
+    }
+
+    function renumberPetBlocks() {
+      const blocks = document.querySelectorAll('.pet-block');
+      blocks.forEach((block, i) => {
+        block.dataset.petIndex = i;
+        block.querySelector('.pet-block-title').textContent = i === 0 ? '(一) 毛孩基本資料' : `🐕 第 ${i + 1} 隻毛孩基本資料`;
+        block.querySelector('.remove-pet-btn').classList.toggle('hidden', i === 0);
+      });
+    }
+
     // ==================== 第一頁防呆：由上到下引導 ====================
     function validateAndNextStep() {
       const inputs = document.querySelectorAll('#step1-container input[required], #step1-container textarea[required], #step1-container select[required]');
@@ -585,23 +624,20 @@
 
       const btn = document.getElementById("submitBtn");
       const sigData = canvas.toDataURL("image/png");
-      const petNameInput = document.getElementById("petName").value;
+
+      // 多犬家庭：每個 .pet-block 收集成一筆毛孩資料
+      const pets = Array.from(document.querySelectorAll('.pet-block')).map(block => {
+        const pet = {};
+        block.querySelectorAll('[data-key]').forEach(el => { pet[el.dataset.key] = el.value; });
+        return pet;
+      });
+      const petNamesJoined = pets.map(p => p.petName).join('、');
 
       btn.disabled = true;
       btn.innerText = "⏳ 正在處理安全合約與上傳...";
 
       const payload = {
-        petName: petNameInput,
-        breed: document.getElementById("breed").value,
-        petBirthday: document.getElementById("petBirthday").value,
-        petWeight: document.getElementById("petWeight").value,
-        petGender: document.getElementById("petGender").value,
-        neutered: document.getElementById("neutered").value,
-        vaccine: document.getElementById("vaccine").value,
-        fleaMedicine: document.getElementById("fleaMedicine").value,
-        aggression: document.getElementById("aggression").value,
-        chipId: document.getElementById("chipId").value,
-        notes: document.getElementById("notes").value,
+        pets: pets,
         ownerName: document.getElementById("ownerName").value,
         phone: document.getElementById("phone").value,
         lineId: document.getElementById("lineId").value,
@@ -621,8 +657,9 @@
             document.getElementById("regForm").classList.add("hidden");
             document.getElementById("header-area").classList.add("hidden");
 
-            document.getElementById("res-serial").innerText = response.serial;
-            document.getElementById("res-petName").innerText = petNameInput;
+            const serials = response.serials || [response.serial];
+            document.getElementById("res-serial").innerText = serials.join('、');
+            document.getElementById("res-petName").innerText = petNamesJoined;
 
             if (response.pdfUrl) {
               document.getElementById("contractPdfLink").href = response.pdfUrl;
@@ -648,6 +685,10 @@
     function resetFormToStart() {
       document.getElementById("regForm").reset();
       clearSignature();
+
+      // 多犬家庭表單：移除多餘的毛孩區塊，只留第一隻
+      document.querySelectorAll('.pet-block').forEach((block, i) => { if (i > 0) block.remove(); });
+      renumberPetBlocks();
 
       // 重置合約鎖定與預設值
       agreeCheckbox.disabled = true;
